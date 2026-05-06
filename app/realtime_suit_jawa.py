@@ -1,6 +1,6 @@
-import os
 import sys
 import time
+from pathlib import Path
 
 import cv2
 import mediapipe as mp
@@ -10,8 +10,9 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
 
-MODEL_PATH = "model_final_mediapipe_mlp.keras"
-HAND_LANDMARKER_PATH = "hand_landmarker.task"
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_PATH = BASE_DIR / "models" / "model_final_mediapipe_mlp.keras"
+HAND_LANDMARKER_PATH = BASE_DIR / "models" / "hand_landmarker.task"
 CONFIDENCE_THRESHOLD = 70.0
 
 class_names = ["gajah", "orang", "semut"]
@@ -28,16 +29,16 @@ model = None
 
 
 def check_required_files():
-    if not os.path.exists(MODEL_PATH):
+    if not MODEL_PATH.exists():
         print(f"Error: file model tidak ditemukan: {MODEL_PATH}")
-        print("Pastikan model_final_mediapipe_mlp.keras berada di folder yang sama.")
+        print("Pastikan model_final_mediapipe_mlp.keras berada di folder models/.")
         sys.exit(1)
 
-    if not os.path.exists(HAND_LANDMARKER_PATH):
+    if not HAND_LANDMARKER_PATH.exists():
         print(f"Error: file MediaPipe Hand Landmarker tidak ditemukan: {HAND_LANDMARKER_PATH}")
         print("Download terlebih dahulu dengan perintah:")
         print(
-            "curl -L -o hand_landmarker.task "
+            "curl -L -o models/hand_landmarker.task "
             "https://storage.googleapis.com/mediapipe-models/hand_landmarker/"
             "hand_landmarker/float16/1/hand_landmarker.task"
         )
@@ -149,7 +150,7 @@ def draw_status_panel(frame, lines):
 
 
 def create_hand_landmarker():
-    base_options = python.BaseOptions(model_asset_path=HAND_LANDMARKER_PATH)
+    base_options = python.BaseOptions(model_asset_path=str(HAND_LANDMARKER_PATH))
     options = vision.HandLandmarkerOptions(
         base_options=base_options,
         running_mode=vision.RunningMode.VIDEO,
@@ -165,7 +166,7 @@ def main():
     global model
 
     check_required_files()
-    model = tf.keras.models.load_model(MODEL_PATH)
+    model = tf.keras.models.load_model(str(MODEL_PATH))
 
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():

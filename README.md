@@ -6,9 +6,15 @@ Aplikasi Python untuk deteksi gesture Suit Jawa secara real-time menggunakan web
 
 ```text
 suit_jawa_realtime/
-  model_final_mediapipe_mlp.keras
-  hand_landmarker.task
-  realtime_suit_jawa.py
+  app/
+    realtime_suit_jawa.py
+  docs/
+    project_structure.md
+  models/
+    model_final_mediapipe_mlp.keras
+    hand_landmarker.task
+  notebooks/
+    suit_jawa_mediapipe_mlp.ipynb
   requirements.txt
   README.md
 ```
@@ -24,21 +30,21 @@ pip install -r requirements.txt
 Jika file `hand_landmarker.task` belum ada, download dengan perintah:
 
 ```bash
-curl -L -o hand_landmarker.task https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task
+curl -L -o models/hand_landmarker.task https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task
 ```
 
 ## Pastikan File Model Ada
 
-Pastikan file model berikut berada di folder yang sama dengan program:
+Pastikan file model berikut berada di folder `models/`:
 
 ```text
-model_final_mediapipe_mlp.keras
+models/model_final_mediapipe_mlp.keras
 ```
 
 ## Cara Menjalankan
 
 ```bash
-python realtime_suit_jawa.py
+python app/realtime_suit_jawa.py
 ```
 
 ## Cara Memakai
@@ -61,6 +67,6 @@ python realtime_suit_jawa.py
 ## Troubleshooting
 
 - Jika kamera tidak terbuka, coba ubah `cv2.VideoCapture(0)` menjadi `cv2.VideoCapture(1)`.
-- Jika `hand_landmarker.task` tidak ditemukan, download file task terlebih dahulu.
-- Jika model tidak ditemukan, pastikan `model_final_mediapipe_mlp.keras` berada di folder yang sama.
+- Jika `hand_landmarker.task` tidak ditemukan, download file task ke folder `models/` terlebih dahulu.
+- Jika model tidak ditemukan, pastikan `model_final_mediapipe_mlp.keras` berada di folder `models/`.
 - Jika prediksi tidak stabil, pastikan jari terlihat jelas dan tangan tidak terlalu blur.
