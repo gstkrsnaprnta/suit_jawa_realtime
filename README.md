@@ -8,9 +8,11 @@ Aplikasi Python untuk deteksi gesture Suit Jawa secara real-time menggunakan web
 suit_jawa_realtime/
   app/
     realtime_suit_jawa.py
+    realtime_suit_jawa_cnn.py
   docs/
     project_structure.md
   models/
+    best_model_cnn_suit_jawa.keras
     model_final_mediapipe_mlp.keras
     hand_landmarker.task
   notebooks/
@@ -43,8 +45,16 @@ models/model_final_mediapipe_mlp.keras
 
 ## Cara Menjalankan
 
+Versi MediaPipe landmark + MLP:
+
 ```bash
 python app/realtime_suit_jawa.py
+```
+
+Versi pure CNN dari ROI webcam:
+
+```bash
+python app/realtime_suit_jawa_cnn.py
 ```
 
 ## Cara Memakai
@@ -55,6 +65,13 @@ python app/realtime_suit_jawa.py
   - orang = telunjuk
   - semut = kelingking
 - Jika dua tangan terdeteksi, sistem menentukan pemenang.
+- Tekan `Q` untuk keluar.
+
+Pada script CNN:
+
+- Letakkan gesture di dalam kotak ROI.
+- Tekan `1` untuk mode satu ROI.
+- Tekan `2` untuk mode dua ROI dan menentukan pemenang dari ROI kiri/kanan.
 - Tekan `Q` untuk keluar.
 
 ## Aturan Suit Jawa
